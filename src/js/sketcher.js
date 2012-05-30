@@ -1,7 +1,7 @@
 function Sketcher( canvasID, brushImage ) {
 	this.renderFunction = (brushImage == null || brushImage == undefined) ? this.updateCanvasByLine : this.updateCanvasByBrush;
 	this.brush = brushImage;
-	this.touchSupported = Modernizr.touch;
+	this.touchSupported = ('ontouchstart' in window); 
 	this.canvasID = canvasID;
 	this.canvas = $("#"+canvasID);
 	this.context = this.canvas.get(0).getContext("2d");	
