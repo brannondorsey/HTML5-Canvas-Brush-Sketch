@@ -46,7 +46,6 @@ Sketcher.prototype.onCanvasMouseMove = function () {
     	return false;
 	}
 }
-
 Sketcher.prototype.onCanvasMouseUp = function (event) {
 	var self = this;
 	return function(event) {
@@ -93,8 +92,9 @@ Sketcher.prototype.updateCanvasByBrush = function (event) {
 Sketcher.prototype.drawLine = function (start, end){
 	var halfBrushW = this.brush.width/2;
 	var halfBrushH = this.brush.height/2;
-
-	var distance = parseInt( Trig.distanceBetween2Points( start, end ) );
+    var dx = end.x - start.x;
+    var dy = end.y - start.y;
+	var distance = parseInt( Math.sqrt(dx*dx + dy*dy) );
 	if ( distance > 0 ){
 		var x,y;
 		var sin_a = ( end.x - start.x ) / distance;
