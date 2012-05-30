@@ -97,12 +97,12 @@ Sketcher.prototype.drawLine = function (start, end){
 	var distance = parseInt( Math.sqrt(dx*dx + dy*dy) );
 	if ( distance > 0 ){
 		var x,y;
-		var sin_a = ( end.x - start.x ) / distance;
-		var cos_a = ( end.y - start.y ) / distance;
+		var sin_a = ( end.y - start.y ) / distance;
+		var cos_a = ( end.x - start.x ) / distance;
+        
 		for ( var z=0; z <= distance; z++ ){
-			x = start.x + ( sin_a * z ) - halfBrushW;
-			y = start.y + ( cos_a * z ) - halfBrushH;
-			//console.log( x, y, z );
+			x = start.x + ( cos_a * z ) - halfBrushW;
+			y = start.y + ( sin_a * z ) - halfBrushH;
 			this.context.drawImage(this.brush, x, y);
 		}
 	}
