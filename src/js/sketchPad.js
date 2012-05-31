@@ -106,7 +106,10 @@ SketchPad.prototype.drawLine = function (start, end){
 			y = start.y + ( sin_a * z ) - halfBrushH;
 			this.context.drawImage(this.brush, x, y);
 		}
-	}
+	} else {
+      	this.context.drawImage(this.brush, start.x - halfBrushW, start.y - halfBrushH);
+
+    }
 }
 
 SketchPad.prototype.toString = function () {
