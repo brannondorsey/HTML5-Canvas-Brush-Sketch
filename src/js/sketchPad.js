@@ -101,7 +101,7 @@ SketchPad.prototype.drawLine = function (start, end){
 		var sin_a = ( end.y - start.y ) / distance;
 		var cos_a = ( end.x - start.x ) / distance;
         
-		for ( var z=0; z <= distance; z++ ){
+		for ( var z=0; z <= distance - 1; z++ ){
 			x = start.x + ( cos_a * z ) - halfBrushW;
 			y = start.y + ( sin_a * z ) - halfBrushH;
 			this.context.drawImage(this.brush, x, y);
