@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name=viewport content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
-<title>Stylistic Sketchy</title>
+<title>Sketch Pad</title>
 
 <script src="js/jquery-1.7.min.js"></script>
 
-<script src="js/sketcher.js"></script>
+<script src="js/sketchPad.js"></script>
 
 <link rel="stylesheet" href="assets/bootstrap.css" />
 <link rel="stylesheet" href="assets/styles.css" />
@@ -20,11 +20,11 @@ var brush = null;
 $(document).ready(function(e) {
 	
 	brush = new Image();
-	  brush.src = 'assets/brush2.png';
-	  brush.onload = function(){
-		sketcher = new Sketcher( "sketch", brush );
-	  }
-	
+	brush.src = 'assets/brush2.png';
+//	brush.onload = function(){
+	  sketcher = new SketchPad("sketch", brush);
+//	}
+    $('.btn').click(function(){sketcher.clear();});	
 });
 
 </script>
@@ -44,8 +44,7 @@ $(document).ready(function(e) {
           
           <ul class="nav secondary-nav">
             <a href="#">
-             <input type="button" class="btn error" value="clear"
-             	onclick="sketcher.clear();" />
+             <input type="button" class="btn error" value="clear" />
              </a>
           </ul>
         </div>
