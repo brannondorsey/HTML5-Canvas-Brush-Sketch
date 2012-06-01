@@ -21,6 +21,10 @@
 var sketcher = null;
 var brush = null;
 
+function hideMenus() {
+  $('#picker').hide();
+}
+
 $(document).ready(function(e) {
 	
 //	brush = new Image();
@@ -28,6 +32,9 @@ $(document).ready(function(e) {
 //	brush.onload = function(){
     brush = new markerMaker(10,'red');
 	  sketcher = new SketchPad("sketch", brush.canvas[0]);
+      sketcher.preOnCanvasMouseDown = function(){
+        hideMenus();
+      }
   // sketcher = new SketchPad("sketch", brush);
 //	}
     $('.btn').click(function(){sketcher.clear();});	

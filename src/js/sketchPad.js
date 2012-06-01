@@ -27,6 +27,8 @@ function SketchPad( canvasID, brushImage ) {
 SketchPad.prototype.onCanvasMouseDown = function () {
 	var self = this;
 	return function(event) {
+        self.preOnCanvasMouseDown.call();
+
 		self.mouseMoveHandler = self.onCanvasMouseMove()
 		self.mouseUpHandler = self.onCanvasMouseUp()
 
@@ -131,5 +133,10 @@ SketchPad.prototype.clear = function () {
 
 	var c = this.canvas[0];
 	this.context.clearRect( 0, 0, c.width, c.height );
+}
+
+SketchPad.prototype.preOnCanvasMouseDown = function() {
+   //override this...
+   // console.log('hi');
 }
 			
