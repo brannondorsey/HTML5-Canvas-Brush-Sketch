@@ -20,12 +20,12 @@ var brush = null;
 
 $(document).ready(function(e) {
 	
-	brush = new Image();
-	brush.src = 'assets/brush2.png';
+//	brush = new Image();
+//	brush.src = 'assets/brush2.png';
 //	brush.onload = function(){
-//    brush = new markerMaker(300);
-//	  sketcher = new SketchPad("sketch", brush.canvas[0]);
-   sketcher = new SketchPad("sketch", brush);
+    brush = new markerMaker(10);
+	  sketcher = new SketchPad("sketch", brush.canvas[0]);
+  // sketcher = new SketchPad("sketch", brush);
 //	}
     $('.btn').click(function(){sketcher.clear();});	
 });

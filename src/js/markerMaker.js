@@ -19,9 +19,9 @@ markerMaker.prototype.make = function () {
   this.context.closePath();
   var grd = this.context.createLinearGradient(0, 0, this.length, this.length);
         // light blue
-        grd.addColorStop(1, "#8ED6FF");
+        grd.addColorStop(1, "rgba(0,0,0,0.3)");
         // dark blue
-        grd.addColorStop(0, "rgba(0,255,0,0.05)");
+        grd.addColorStop(0, "rgba(0,0,0,0.05)");
         this.context.fillStyle = grd;
   
   this.context.fill();
