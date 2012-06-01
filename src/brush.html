@@ -10,9 +10,12 @@
 
 <script src="js/sketchPad.js"></script>
 <script src="js/markerMaker.js"></script>
+<script src="js/farbtastic.min.js"></script>
 
 <link rel="stylesheet" href="assets/bootstrap.css" />
 <link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/farbtastic.css" />
+
 
 <script>
 var sketcher = null;
@@ -23,11 +26,14 @@ $(document).ready(function(e) {
 //	brush = new Image();
 //	brush.src = 'assets/brush2.png';
 //	brush.onload = function(){
-    brush = new markerMaker(10);
+    brush = new markerMaker(10,'red');
 	  sketcher = new SketchPad("sketch", brush.canvas[0]);
   // sketcher = new SketchPad("sketch", brush);
 //	}
     $('.btn').click(function(){sketcher.clear();});	
+      var fb = $.farbtastic('#picker',function(color) {$('#color_swatch').css('background-color',color); });
+     $('#picker').hide();
+     $('#color_swatch').click(function(){$('#picker').show();});
 });
 
 </script>
@@ -49,6 +55,9 @@ $(document).ready(function(e) {
             <a href="#">
              <input type="button" class="btn error" value="clear" />
              </a>
+             <div id="color_swatch" style="width:30px;height:30px;background-color:black;position:absolute;top:0;right:80px;border:1px solid gray;">
+             </div>
+             <div id="picker" style="position:absolute;"></div>
           </ul>
         </div>
       </div><!-- /topbar-inner -->

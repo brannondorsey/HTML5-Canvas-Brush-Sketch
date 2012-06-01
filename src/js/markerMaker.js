@@ -1,8 +1,9 @@
 /*
 create a semi-transparent image to be used as a brush tip
 */
-function markerMaker(length) {
+function markerMaker(length,color) {
     this.length = length || 30;
+    this.color = color || 'black';
     this.canvas = $('<canvas width="'+length+'px" height="'+length+'px" style="border:1px solid gray;">');
     this.context = this.canvas[0].getContext('2d');
     this.make();
