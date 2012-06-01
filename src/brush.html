@@ -22,7 +22,8 @@ var sketcher = null;
 var brush = null;
 
 function hideMenus() {
-  $('#picker').hide();
+  $('#colorpicker').hide();
+  $('#tip_picker').hide();
 }
 
 $(document).ready(function(e) {
@@ -35,12 +36,25 @@ $(document).ready(function(e) {
       sketcher.preOnCanvasMouseDown = function(){
         hideMenus();
       }
-  // sketcher = new SketchPad("sketch", brush);
+// sketcher = new SketchPad("sketch", brush);
 //	}
+    
     $('.btn').click(function(){sketcher.clear();});	
-      var fb = $.farbtastic('#picker',function(color) {$('#color_swatch').css('background-color',color); });
-     $('#picker').hide();
-     $('#color_swatch').click(function(){$('#picker').toggle();});
+
+//color picker bindings
+
+      var fb = $.farbtastic('#colorpicker',function(color) {$('#color_swatch').css('background-color',color); });
+     $('#colorpicker').hide();
+     $('#color_swatch').click(function(){hideMenus();$('#colorpicker').toggle();});
+
+//tip picker bindings
+    $('#tip_picker').hide();
+    $('#tip_swatch').click(function(){hideMenus();$('#tip_picker').toggle();});
+    $('#tip_picker img').click(function(){
+      hideMenus();
+      $('#tip_swatch img').attr('src',$(this).attr('src'));
+    });
+
 });
 
 </script>
@@ -62,9 +76,18 @@ $(document).ready(function(e) {
             <a href="#">
              <input type="button" class="btn error" value="clear" />
              </a>
+             <div id="tip_swatch" style="width:30px;height:30px;background-color:white;position:absolute;top:0;right:150px;border:1px solid gray;">
+               <img src="assets/brush2.png">
+             </div>
+
              <div id="color_swatch" style="width:30px;height:30px;background-color:black;position:absolute;top:0;right:80px;border:1px solid gray;">
              </div>
-             <div id="picker" style="position:absolute;"></div>
+             <div id="colorpicker" style="position:absolute;"></div>
+             <div id="tip_picker" style="position:absolute;">
+                              <img src="assets/brush2.png">
+                              <img src="assets/mask.png">
+
+             </div>
           </ul>
         </div>
       </div><!-- /topbar-inner -->
