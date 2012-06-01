@@ -16,14 +16,18 @@
 
 </head>
 <script>
+var marker;
 $(document).ready(function(e) {
-
-  var marker = new markerMaker(50);
+  //must wait for image to be loaded
+  $('img').load(function(){
+    marker = new markerMaker($('img')[0],'#A00000');
   
-  $('body').append(marker.canvas);
+    $('body').append(marker);
+  });
 });
 </script>
 
 <body>
+<img src="assets/brush2.png">
 </body>
 </html>
