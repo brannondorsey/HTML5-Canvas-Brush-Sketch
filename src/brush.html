@@ -40,7 +40,7 @@ $(document).ready(function(e) {
     $('.btn').click(function(){sketcher.clear();});	
       var fb = $.farbtastic('#picker',function(color) {$('#color_swatch').css('background-color',color); });
      $('#picker').hide();
-     $('#color_swatch').click(function(){$('#picker').show();});
+     $('#color_swatch').click(function(){$('#picker').toggle();});
 });
 
 </script>
