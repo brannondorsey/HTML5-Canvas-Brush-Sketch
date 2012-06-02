@@ -26,8 +26,8 @@ function hideMenus() {
   $('#tip_picker').hide();
 }
 
-function installBrush() {
-  brush = new markerMaker($('#tip_swatch img')[0], $('#color_swatch').css('background-color'));
+function installBrush(img, color) {
+  brush = new markerMaker(img, color);
   sketcher.brush = brush;
   sketcher.renderFunction = sketcher.updateCanvasByBrush;
 }
@@ -49,17 +49,18 @@ $(document).ready(function(e) {
      $('#colorpicker').hide();
      $('#color_swatch').click(function(){hideMenus();$('#colorpicker').toggle();});
      function setColor(color) {
+         installBrush($('#tip_swatch img')[0], color);
          $('#color_swatch').css('background-color',color);
-         installBrush();
+
       }
 //tip picker bindings
     
     $('#tip_picker').hide();
     $('#tip_swatch').click(function(){hideMenus();$('#tip_picker').toggle();});
     $('#tip_picker img').click(function(){
+      installBrush($(this)[0],$('#color_swatch').css('background-color'));
       hideMenus();
       $('#tip_swatch img').attr('src',$(this).attr('src'));
-      installBrush();
     });
 
     
@@ -93,9 +94,9 @@ $(document).ready(function(e) {
              </div>
              <div id="colorpicker" style="position:absolute;"></div>
              <div id="tip_picker" style="position:absolute;">
-                              <img src="assets/brush2.png">
-                              <img src="assets/mask.png">
-                              <img src="assets/brush_images.jpg">
+                              <img src="assets/tip.png">
+                              <img src="assets/tip2.png">
+                              <img src="assets/tip3.png">
 
              </div>
           </ul>
