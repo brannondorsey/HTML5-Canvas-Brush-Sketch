@@ -15,7 +15,30 @@
 <link rel="stylesheet" href="assets/bootstrap.css" />
 <link rel="stylesheet" href="assets/styles.css" />
 <link rel="stylesheet" href="assets/farbtastic.css" />
+<style>
+#tip_picker {
+  border:1px solid gray;
+  width:32px;
+}
+#tip_picker img {
+  border:1px solid black;
+}
+#tip_picker img:hover {
+  border:1px solid orange;
+}
 
+#eraser_picker {
+  border:1px solid gray;
+  width:32px;
+}
+#eraser_picker img {
+  border:1px solid black;
+}
+#eraser_picker img:hover {
+  border:1px solid orange;
+}
+
+</style>
 
 <script>
 var sketcher = null;
@@ -24,6 +47,7 @@ var brush = null;
 function hideMenus() {
   $('#colorpicker').hide();
   $('#tip_picker').hide();
+  $('#eraser_picker').hide();
 }
 
 function installBrush(img, color) {
@@ -47,7 +71,8 @@ $(document).ready(function(e) {
 
       var fb = $.farbtastic('#colorpicker',setColor);
      $('#colorpicker').hide();
-     $('#color_swatch').click(function(){hideMenus();$('#colorpicker').toggle();});
+     $('#color_swatch').click(function(){ sketcher.context.globalCompositeOperation = 'source-over';
+hideMenus();$('#colorpicker').toggle();});
      function setColor(color) {
          installBrush($('#tip_swatch img')[0], color);
          $('#color_swatch').css('background-color',color);
@@ -56,15 +81,31 @@ $(document).ready(function(e) {
 //tip picker bindings
     
     $('#tip_picker').hide();
-    $('#tip_swatch').click(function(){hideMenus();$('#tip_picker').toggle();});
+    $('#tip_swatch').click(function(){     
+ sketcher.context.globalCompositeOperation = 'source-over';
+hideMenus();
+$('#tip_picker').toggle();
+});
+
     $('#tip_picker img').click(function(){
       installBrush($(this)[0],$('#color_swatch').css('background-color'));
       hideMenus();
       $('#tip_swatch img').attr('src',$(this).attr('src'));
     });
 
+//eraser picker bindings
     
-
+    $('#eraser_picker').hide();
+    $('#eraser_swatch').click(function(){
+sketcher.context.globalCompositeOperation = 'destination-out';
+hideMenus();
+$('#eraser_picker').toggle();});
+    $('#eraser_picker img').click(function(){
+      installBrush($(this)[0],$('#color_swatch').css('background-color'));
+ //     sketcher.context.globalCompositeOperation = 'destination-out';
+      hideMenus();
+      $('#eraser_swatch img').attr('src',$(this).attr('src'));
+    });
 });
 
 </script>
@@ -86,9 +127,16 @@ $(document).ready(function(e) {
             <a href="#">
              <input type="button" class="btn error" value="clear" />
              </a>
-             <div id="tip_swatch" style="width:30px;height:30px;background-color:white;position:absolute;top:0;right:150px;border:1px solid gray;">
-               <img src="assets/brush2.png">
+
+
+             <div id="eraser_swatch" style="width:30px;height:30px;background-color:white;position:absolute;top:0;right:300px;border:1px solid gray;">
+               <img>
              </div>
+
+
+             <div id="tip_swatch" style="width:30px;height:30px;background-color:white;position:absolute;top:0;right:150px;border:1px solid gray;">
+               <img>
+              </div>
 
              <div id="color_swatch" style="width:30px;height:30px;background-color:black;position:absolute;top:0;right:80px;border:1px solid gray;">
              </div>
@@ -99,11 +147,20 @@ $(document).ready(function(e) {
                               <img src="assets/tip3.png">
 
              </div>
+             <div id="eraser_picker" style="position:absolute;">
+                              <img src="assets/tip.png">
+                              <img src="assets/tip2.png">
+                              <img src="assets/tip3.png">
+
+             </div>
+
+
+
           </ul>
         </div>
       </div><!-- /topbar-inner -->
     </div><!-- /topbar -->
   </div>
-    <canvas id="sketch" width="1024" height="640" />
+    <canvas id="sketch" width="600" height="600" style="margin-top:100px;"/>
 </body>
 </html>
