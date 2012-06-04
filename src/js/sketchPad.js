@@ -1,5 +1,6 @@
 function SketchPad( canvasID, brushImage ) {
-	this.renderFunction = (brushImage == null || brushImage == undefined) ? this.updateCanvasByLine : this.updateCanvasByBrush;
+	this.points = [];
+    this.renderFunction = (brushImage == null || brushImage == undefined) ? this.updateCanvasByLine : this.updateCanvasByBrush;
 	this.brush = brushImage;
 	this.touchSupported = ('ontouchstart' in window); 
 	this.canvasID = canvasID;
@@ -28,7 +29,7 @@ SketchPad.prototype.onCanvasMouseDown = function () {
 	var self = this;
 	return function(event) {
         self.preOnCanvasMouseDown.call();
-
+        
 		self.mouseMoveHandler = self.onCanvasMouseMove()
 		self.mouseUpHandler = self.onCanvasMouseUp()
 
@@ -36,6 +37,7 @@ SketchPad.prototype.onCanvasMouseDown = function () {
 		$(document).bind( self.mouseUpEvent, self.mouseUpHandler );
 		
 		self.updateMousePosition( event );
+        self.points.push([self.lastMousePoint.x, self.lastMousePoint.y]);
 		self.renderFunction( event );
 	}
 }
@@ -52,7 +54,7 @@ SketchPad.prototype.onCanvasMouseMove = function () {
 SketchPad.prototype.onCanvasMouseUp = function (event) {
 	var self = this;
 	return function(event) {
-
+        self.points = [];
 		$(document).unbind( self.mouseMoveEvent, self.mouseMoveHandler );
 		$(document).unbind( self.mouseUpEvent, self.mouseUpHandler );
 		
@@ -88,17 +90,41 @@ SketchPad.prototype.updateCanvasByLine = function (event) {
 SketchPad.prototype.updateCanvasByBrush = function (event) {
 	var start = { x:this.lastMousePoint.x, y: this.lastMousePoint.y };
 	this.updateMousePosition( event );
+    this.points.push([this.lastMousePoint.x, this.lastMousePoint.y]);
 	var end = { x:this.lastMousePoint.x, y: this.lastMousePoint.y };
 	this.drawLine( start, end );
 }
 
 SketchPad.prototype.drawLine = function (start, end){
+
 	var halfBrushW = this.brush.width/2;
 	var halfBrushH = this.brush.height/2;
     var dx = end.x - start.x;
     var dy = end.y - start.y;
 	var distance = parseInt( Math.sqrt(dx*dx + dy*dy) );
-	if ( distance > 0 ){
+	if ( distance > 20 ){
+           //     console.log('fast:' + distance);
+
+            var s = Smooth(this.points,{ 
+  method: 'cubic',
+    clip: 'clamp',
+  //  lanczosFilterSize: 10,
+    cubicTension: 0
+           
+        
+          });
+        
+
+        for (var t=this.points.length - 2; t <= this.points.length - 1; t+= (1/distance)) {
+          var x,y;
+          var point = s(t);
+          var x = point[0] - halfBrushW;
+          var y = point[1] - halfBrushH;
+        	this.context.drawImage(this.brush, x, y);
+
+        }
+    }else if (distance > 0 && distance <= 20) {
+      // console.log('slow:' + distance);
 		var x,y;
 		var sin_a = ( end.y - start.y ) / distance;
 		var cos_a = ( end.x - start.x ) / distance;
@@ -108,7 +134,9 @@ SketchPad.prototype.drawLine = function (start, end){
 			y = start.y + ( sin_a * z ) - halfBrushH;
 			this.context.drawImage(this.brush, x, y);
 		}
+
 	} else {
+     //   console.log('no distance');
       	this.context.drawImage(this.brush, start.x - halfBrushW, start.y - halfBrushH);
 
     }
